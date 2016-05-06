@@ -29,7 +29,7 @@
         };
       }
 
-      var shakaSource = new shaka.player.DashVideoSource(source.src, interpretContentProtection, estimator);
+      shakaSource = new shaka.player.DashVideoSource(source.src, interpretContentProtection, estimator);
 
       this.shakaPlayer.load(shakaSource).then(function() {
         if (options.initShakaMenus) {
