@@ -18,10 +18,23 @@
       var video = player.el();
       this.shakaPlayer = new shaka.player.Player(video);
       var estimator = new shaka.util.EWMABandwidthEstimator();
-      var shakaSource = new shaka.player.DashVideoSource(source.src, null, estimator);
+      var shakaSource, interpretContentProtection = null;
+
+      if ( source.licenseServers && (Object.getOwnPropertyNames(source.licenseServers).length ) ) {
+        interpretContentProtection = function(a, b) {
+          return [{
+            'keySystem': source.licenseServers.keySystem,
+            'licenseServerUrl': source.licenseServers.licenseServerUrl
+          }];
+        };
+      }
+
+      var shakaSource = new shaka.player.DashVideoSource(source.src, interpretContentProtection, estimator);
 
       this.shakaPlayer.load(shakaSource).then(function() {
-        player.initShakaMenus();
+        if (options.initShakaMenus) {
+          player.initShakaMenus();
+        }
       });
     },
 
