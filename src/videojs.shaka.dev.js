@@ -36,6 +36,8 @@
           player.initShakaMenus();
         }
       });
+
+      window.shakaPlayer = this.shakaPlayer;
     },
 
     initShakaMenus: function() {
